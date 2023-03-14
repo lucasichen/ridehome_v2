@@ -1,0 +1,33 @@
+import React, {useState} from 'react'
+import styles from './AudioSlider.module.scss'
+
+import Slider from '@mui/material/Slider'
+
+// props: id, sound, title, volume
+function AudioSlider(soundEffect) {
+  const [sliderValue, setValue] = useState(0);
+
+  const handleChange = (e, newVal) => {
+    setValue(newVal);
+    var audio = document.getElementById(soundEffect.id);
+    audio.play();
+    audio.volume = parseFloat(newVal);
+    audio.autoplay=""
+  };
+
+  return (
+    <div>
+      <Slider className={styles.Slider}
+        value = { sliderValue } 
+        step = { 0.1 }
+        min={ 0.0 }
+        max = { 1.0 }
+        onChange={handleChange} 
+      />
+      <h2 className={styles.sliderTitle}>{soundEffect.title}</h2>
+      <audio loop id={soundEffect.id} src={soundEffect.sound}></audio>
+    </div>
+  );
+}
+
+export default AudioSlider;
